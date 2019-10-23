@@ -1,0 +1,29 @@
+spring:
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+      - id: SPRINGCLOUD-PROVIDER-CLAIMS
+        uri: lb://SPRINGCLOUD-PROVIDER-CLAIMS
+        predicates:
+          - Path=/claims/**
+        filters:
+        - StripPrefix=1
+      - id: SPRINGCLOUD-PROVIDER-UNDERWRITE
+        uri: lb://SPRINGCLOUD-PROVIDER-UNDERWRITE
+        predicates:
+          - Pach=/underwrite/**
+        filters:
+        - StripPrefix=1
+
+logging:
+  level:
+    org.springframework.cloud.gateway: trace
+    org.springframework.http.server.reactive: debug
+    org.springframework.web.reactive: debug
+    reactor.ipc.netty: debug
+feign:
+  hystrix:
+    enabled: true
