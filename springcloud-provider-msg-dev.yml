@@ -1,0 +1,43 @@
+feign:
+  hystrix:
+    enabled: true
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    url : jdbc:mysql://localhost:3306/reliable-message?characterEncoding=utf8&useSSL=false
+    driverClassName: com.mysql.jdbc.Driver
+    initialSize: 5
+    minIdle: 5
+    maxActive: 20
+    maxWait: 60000
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: SELECT 1
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    maxPoolPreparedStatementPerConnectionSize: 20
+    filters: stat,wall
+    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000;noAccessToProcedureBodies=true;useUnicode=true;characterEncoding=utf-8;useOldAliasMetadataBehavior=true;autoReconnect=true
+    useGlobalDataSourceStat: true
+  rabbitmq:
+    publisher-confirms: true
+    publisher-returns: true
+    listener:
+      direct:
+       acknowledge-mode: manual
+      simple:
+        acknowledge-mode: manual
+hystrix:
+  config:
+    stream:
+      maxConcurrentConnections: 50
+  command:
+    default:
+      execution:
+        timeout:
+          enabled: true
+        isolation:
+          thread:
+            timeoutInMilliseconds: 30000
