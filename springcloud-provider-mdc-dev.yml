@@ -1,0 +1,45 @@
+management:
+  security:
+    enabled: false
+hystrix:
+  config:
+    stream:
+      maxConcurrentConnections: 50
+  command:
+    default:
+      execution:
+        timeout:
+          enabled: true
+        isolation:
+          thread:
+            timeoutInMilliseconds: 30000
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    url : jdbc:mysql://localhost:3306/springcloud-mdc?characterEncoding=utf8&useSSL=false
+    driverClassName: com.mysql.jdbc.Driver
+    initialSize: 5
+    minIdle: 5
+    maxActive: 20
+    maxWait: 60000
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: SELECT 1
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    maxPoolPreparedStatementPerConnectionSize: 20
+    filters: stat,wall
+    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000;noAccessToProcedureBodies=true;useUnicode=true;characterEncoding=utf-8;useOldAliasMetadataBehavior=true;autoReconnect=true
+    useGlobalDataSourceStat: true
+springcloud:
+  dingTalk:
+    webhookToken:
+      sendException: 0fc2122c955fb9350ca5d840bbe592cd31158ae9dea3b6699d4063eecc402afa
+      jobListener: 0fc2122c955fb9350ca5d840bbe592cd31158ae9dea3b6699d4063eecc402afa
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  config:
+    location: classpath:mybatis-config.xml
+    
